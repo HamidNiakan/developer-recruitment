@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidMobile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -18,8 +19,8 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cellphone' => ['required', 'regex:/^09\d{9}$/'],
-            'name' => ['required'],
+            'cellphone' => ['required', new ValidMobile(),'unique:users,cellphone'],
+            'name' => ['required','string','max:255'],
             'lastname' => ['required'],
             'password' => ['required', 'min:6'],
         ];
